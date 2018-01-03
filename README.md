@@ -38,9 +38,52 @@ For more information, please check these papers:
 3. Run ```python3 training.py ```	
 4. Prediction with ```python3 predictionTranslation.py```
 	
+## LSTM or GRU
+
+By default, the model runs with LSTM cell (long short term memory), but we also provide the user the opportunity to use instead GRU cell. (GRU cell only include 1 gate which is meke the training faster)
+
 ## Downloading weights
 
-coming soon
+We trained this model on the complete English/French dataset. The all training takes weeks. But we got promising results after 18 h of training (20 epoch). You can download our weights [there](https://drive.google.com/open?id=12s5KVDXex1Icy5FeFMLtQ2ADuWupzG_u)
+
+## Our result 
+
+For sure, our system is far from being as accurate as Google Transle. But after 20 epoch only, it reconnizes accurately short sentences.
+
+Example of output:
+
+``` Input sentence: I love you.``` 
+``` Decoded sentence: Je t'aime !``` 
+
+It is accurate.
+
+``` Input sentence: We studied.``` 
+``` Decoded sentence: Nous étudions.``` 
+
+It is accurate.
+
+``` Input sentence: I slept well. ```
+``` Decoded sentence: J'ai dormi toute la journée. ```
+
+Same meaning, but the translation is not fully accurate. The right translation would be "j'ai bien dormi"
+
+``` Input sentence: He worked a lot.``` 
+``` Decoded sentence: Il a travaillé pour un homme riche.``` 
+
+The translation is not correct.
+
+## Conclusion
+
+To conclude, our network learnt the basic concept of english/french, but it still requires two things:
+
+1. A longer training time
+2. A deeper architecture, such as more LSTM cell
+
+
+
+
+
+
 
 
 

@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 from keras.models import Model
-from keras.layers import Input, LSTM, Dense
+from keras.layers import Input, LSTM, Dense, GRU
 from keras.models import load_model
 from keras.callbacks import TensorBoard
 import numpy as np
@@ -12,9 +12,10 @@ epochs = 20  # Number of epochs to train for.
 latent_dim = 1024#256  # Latent dimensionality of the encoding space.
 num_samples = 145437  # Number of samples to train on.
 # Path to the data txt file on disk.
-data_path = '/dataset/fra.txt'
-encoder_path='/output/encoder_modelPredTranslation.h5'
-decoder_path='/output/decoder_modelPredTranslation.h5'
+data_path = 'fra.txt' # to replace by the actual dataset name
+encoder_path='encoder_modelPredTranslation.h5'
+decoder_path='decoder_modelPredTranslation.h5'
+LOG_PATH="log"
 
 
 def prepareData(data_path):
@@ -101,7 +102,24 @@ def encodingChar(input_characters,target_characters,input_texts,target_texts):
 
 
     return encoder_input_data, decoder_input_data, decoder_target_data, input_token_index, target_token_index,num_encoder_tokens,num_decoder_tokens,num_decoder_tokens,max_encoder_seq_length
+	
+def modelTranslation2(num_encoder_tokens,num_decoder_tokens):
+# We crete the model 1 encoder(gru) + 1 decode (gru) + 1 Dense layer + softmax
 
+    encoder_inputs = Input(shape=(None, num_encoder_tokens))
+    encoder = GRU(latent_dim, return_state=True)
+    encoder_outputs, state_h = encoder(encoder_inputs)
+    encoder_states = state_h
+
+    decoder_inputs = Input(shape=(None, num_decoder_tokens))
+    decoder_gru = GRU(latent_dim, return_sequences=True)
+    decoder_outputs = decoder_gru(decoder_inputs, initial_state=state_h)
+    decoder_dense = Dense(num_decoder_tokens, activation='softmax')
+    decoder_outputs = decoder_dense(decoder_outputs)
+    model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
+    
+    return model,decoder_outputs,encoder_inputs,encoder_states,decoder_inputs,decoder_gru,decoder_dense
+	
 def modelTranslation(num_encoder_tokens,num_decoder_tokens):
 # We crete the model 1 encoder(lstm) + 1 decode (LSTM) + 1 Dense layer + softmax
 
@@ -124,9 +142,9 @@ def modelTranslation(num_encoder_tokens,num_decoder_tokens):
 def trainSeq2Seq(model,encoder_input_data, decoder_input_data,decoder_target_data):
 # We load tensorboad
 # We train the model
-
+LOG_PATH="/output/log"
     
-    tbCallBack = TensorBoard(log_dir="/output/log", histogram_freq=0, write_graph=True, write_images=True)
+    tbCallBack = TensorBoard(log_dir=LOG_PATH, histogram_freq=0, write_graph=True, write_images=True)
     # Run training
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy',metrics=['accuracy'])
     model.fit([encoder_input_data, decoder_input_data], decoder_target_data,
