@@ -19,17 +19,17 @@ Sequence-to-sequence learning (Seq2Seq) is about training models to convert sequ
 3. A decoder LSTM is trained to turn the target sequences into the same sequence but offset by one timestep in the future,     a training process called "teacher forcing" in this context.  Is uses as initial state the state vectors from the encoder.     Effectively, the decoder learns to generate `targets[t+1...]` given `targets[...t]`, conditioned on the input sequence.
 	
 4. In inference mode, when we want to decode unknown input sequences, we:
-    # Encode the input sequence into state vectors
-    # Start with a target sequence of size 1 (just the start-of-sequence character)
-    #	Feed the state vectors and 1-char target sequence to the decoder to produce predictions for the next character
-    # Sample the next character using these predictions (we simply use argmax).
-    # Append the sampled character to the target sequence
-    # Repeat until we generate the end-of-sequence character or we hit the character limit.
+    * Encode the input sequence into state vectors
+    * Start with a target sequence of size 1 (just the start-of-sequence character)
+    *	Feed the state vectors and 1-char target sequence to the decoder to produce predictions for the next character
+    * Sample the next character using these predictions (we simply use argmax).
+    * Append the sampled character to the target sequence
+    * Repeat until we generate the end-of-sequence character or we hit the character limit.
 	
 For more information, please check these papers:
 
-	# [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215)
-    # [Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation](https://arxiv.org/abs/1406.1078)
+	* [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215)
+    * [Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation](https://arxiv.org/abs/1406.1078)
 
 ## How to use it
 
