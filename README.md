@@ -53,16 +53,19 @@ For sure, our system is far from being as accurate as Google Transle. But after 
 Example of output:
 
 ``` Input sentence: I love you.``` 
+
 ``` Decoded sentence: Je t'aime !``` 
 
 It is accurate.
 
 ``` Input sentence: We studied.``` 
+
 ``` Decoded sentence: Nous étudions.``` 
 
 It is accurate.
 
 ``` Input sentence: I slept well. ```
+
 ``` Decoded sentence: J'ai dormi toute la journée. ```
 
 Same meaning, but the translation is not fully accurate. The right translation would be "j'ai bien dormi"
@@ -77,7 +80,7 @@ The translation is not correct.
 To conclude, our network learnt the basic concept of english/french, but it still requires two things:
 
 1. A longer training time
-2. A deeper architecture, such as more LSTM cell
+2. A deeper architecture, such as more LSTM cells
 
 
 
