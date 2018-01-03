@@ -31,6 +31,13 @@ For more information, please check these papers:
 	# [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215)
     # [Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation](https://arxiv.org/abs/1406.1078)
 
+## How to use it
+
+1. Downlow you training dataset
+2. Update path and the number of training example
+3. Run ```python3 training.py ```	
+4. Prediction with ```python3 predictionTranslation.py```
+	
 ## Downloading weights
 
 coming soon
